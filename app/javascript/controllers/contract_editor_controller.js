@@ -10,6 +10,29 @@ export default class extends Controller {
 
   connect() {
     console.log("connect to contract editor")
+    const defaultContent = {
+      type: "doc",
+      content: [
+        {
+          type: "paragraph",
+          content: [
+            {
+              type: "text",
+              text: ""
+            }
+          ]
+        }
+      ]
+    }
+    
+    let initialContent
+    try {
+      initialContent = this.contentTarget.value ? JSON.parse(this.contentTarget.value) : defaultContent
+    } catch (e) {
+      console.error("Error parsing initial content:", e)
+      initialContent = defaultContent
+    }
+    
     this.editor = new Editor({
       element: this.editorTarget,
       extensions: [
@@ -17,11 +40,12 @@ export default class extends Controller {
         Link.configure({ openOnClick: false }),
         Placeholder.configure({ placeholder: "Start writing your contract..." })
       ],
-      content: JSON.parse(this.contentTarget.value || `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":""}]}]}`),
+      content: initialContent,
       onUpdate: ({ editor }) => {
         this.contentTarget.value = JSON.stringify(editor.getJSON())
       }
     })
+    
     // ensure value sync on form submit too
     this.element.addEventListener("submit", () => {
       this.contentTarget.value = JSON.stringify(this.editor.getJSON())
