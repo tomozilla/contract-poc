@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-lg-8 offset-lg-2">
+    <h1 class="mb-4">Tiptap Editor Demo</h1>
+    
+    <div data-controller="tiptap">
+      <!-- bubble menu (hover toolbar) -->
+      <div data-tiptap-target="bubble" class="bubble-menu bg-white shadow p-2 rounded">
+        <button type="button" data-action="click->tiptap#toggleBold" class="btn btn-sm btn-outline-secondary">B</button>
+        <button type="button" data-action="click->tiptap#toggleItalic" class="btn btn-sm btn-outline-secondary"><i>I</i></button>
+        <button type="button" data-action="click->tiptap#toggleUnderline" class="btn btn-sm btn-outline-secondary"><u>U</u></button>
+        <button type="button" data-action="click->tiptap#toggleHighlighter" class="btn btn-sm btn-outline-secondary">✎</button>
+      </div>
+
+      <!-- static toolbar -->
+      <div class="tiptap-toolbar">
+        <button type="button" data-action="click->tiptap#toggleBold" class="btn btn-outline-secondary">B</button>
+        <button type="button" data-action="click->tiptap#toggleItalic" class="btn btn-outline-secondary"><i>I</i></button>
+        <button type="button" data-action="click->tiptap#toggleUnderline" class="btn btn-outline-secondary"><u>U</u></button>
+        <button type="button" data-action="click->tiptap#toggleBullet" class="btn btn-outline-secondary">• List</button>
+        <button type="button" data-action="click->tiptap#toggleOrdered" class="btn btn-outline-secondary">1. List</button>
+        <button type="button" data-action="click->tiptap#toggleTask" class="btn btn-outline-secondary">☐ Task</button>
+        <button type="button" data-action="click->tiptap#toggleHighlighter" class="btn btn-outline-secondary">✎</button>
+      </div>
+
+      <input type="hidden" data-tiptap-target="input" value="<p>Start writing here...</p>" />
+      <div data-tiptap-target="content" class="tiptap-editor prose mb-4"></div>
+    </div>
+  </div>
+</div>
