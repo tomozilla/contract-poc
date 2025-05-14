@@ -18,7 +18,7 @@ export default class extends Controller {
           content: [
             {
               type: "text",
-              text: ""
+              text: "Start writing your contract..."
             }
           ]
         }
@@ -33,6 +33,28 @@ export default class extends Controller {
             initialContent = JSON.parse(this.contentTarget.value)
           } else {
             initialContent = this.contentTarget.value
+          }
+          
+          if (initialContent && initialContent.content) {
+            let hasTextContent = false
+            
+            for (const node of initialContent.content) {
+              if (node.type === 'paragraph' && node.content && node.content.length > 0) {
+                for (const textNode of node.content) {
+                  if (textNode.type === 'text' && textNode.text && textNode.text.trim() !== '') {
+                    hasTextContent = true
+                    break
+                  }
+                }
+              }
+              if (hasTextContent) break
+            }
+            
+            if (!hasTextContent) {
+              initialContent = defaultContent
+            }
+          } else {
+            initialContent = defaultContent
           }
         } catch (e) {
           console.error("Error parsing initial content:", e)

@@ -23,7 +23,29 @@ export default class extends Controller {
       
       let json
       try {
-        json = JSON.parse(this.contentValue || JSON.stringify(defaultContent))
+        if (typeof this.contentValue === 'string') {
+          json = JSON.parse(this.contentValue || JSON.stringify(defaultContent))
+        } else {
+          json = this.contentValue || defaultContent
+        }
+        
+        if (!json || !json.content || json.content.length === 0) {
+          json = {
+            type: "doc",
+            content: [
+              {
+                type: "paragraph",
+                content: [
+                  {
+                    type: "text",
+                    text: "This is sample content for testing"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+        
         console.log("Parsed JSON:", json)
       } catch (e) {
         console.error("Error parsing JSON:", e)
