@@ -19,7 +19,7 @@ export default class extends Controller {
         }),
         Image
       ],
-      content: this.inputTarget.value.presence || "<p>Start writing…</p>",
+      content: this.inputTarget.value || "<p>Start writing…</p>",
       onUpdate: ({ editor }) => {
         this.inputTarget.value = editor.getHTML()
       }
