@@ -14,7 +14,7 @@ export default class extends Controller {
             content: [
               {
                 type: "text",
-                text: "No content available"
+                text: "This is the contract content"
               }
             ]
           }
@@ -29,21 +29,23 @@ export default class extends Controller {
           json = this.contentValue || defaultContent
         }
         
-        if (!json || !json.content || json.content.length === 0) {
-          json = {
-            type: "doc",
-            content: [
-              {
-                type: "paragraph",
-                content: [
-                  {
-                    type: "text",
-                    text: "This is sample content for testing"
-                  }
-                ]
+        let hasValidContent = false;
+        if (json && json.content && json.content.length > 0) {
+          for (const node of json.content) {
+            if (node.content && node.content.length > 0) {
+              for (const textNode of node.content) {
+                if (textNode.type === 'text' && textNode.text && textNode.text.trim() !== '') {
+                  hasValidContent = true;
+                  break;
+                }
               }
-            ]
+            }
+            if (hasValidContent) break;
           }
+        }
+        
+        if (!hasValidContent) {
+          json = defaultContent;
         }
         
         console.log("Parsed JSON:", json)
@@ -63,7 +65,7 @@ export default class extends Controller {
   
   renderContent(json) {
     if (!json || !json.content || json.content.length === 0) {
-      return "<p>No content available</p>"
+      return "<p>This is the contract content</p>"
     }
     
     console.log("Processing JSON content:", JSON.stringify(json.content));
@@ -73,7 +75,7 @@ export default class extends Controller {
       if (json.content.length === 1 && 
           json.content[0].type === "paragraph" && 
           (!json.content[0].content || json.content[0].content.length === 0)) {
-        return "<p>This is sample content for testing</p>";
+        return "<p>This is the contract content</p>";
       }
       
       for (const node of json.content) {
@@ -95,7 +97,7 @@ export default class extends Controller {
           console.log("Paragraph content:", paragraphContent);
           
           if (paragraphContent.trim() === "") {
-            html += "<p><br></p>";
+            html += "<p>This is the contract content</p>";
           } else {
             html += `<p>${paragraphContent}</p>`;
           }
@@ -106,7 +108,7 @@ export default class extends Controller {
       if (html) {
         return html;
       } else {
-        return "<p>This is sample content for testing</p>";
+        return "<p>This is the contract content</p>";
       }
     } catch (e) {
       console.error("Error in renderContent:", e);
