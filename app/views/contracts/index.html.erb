@@ -21,7 +21,7 @@
                 <%= contract.title %>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                <%= contract.status.titleize %>
+                <%= contract.status&.titleize || 'Unknown' %>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 <%= link_to "View", contract_path(contract), class: "text-indigo-600 hover:text-indigo-900 mr-3" %>

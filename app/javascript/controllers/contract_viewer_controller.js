@@ -66,12 +66,20 @@ export default class extends Controller {
           
           console.log("Paragraph content:", paragraphContent);
           
-          html += `<p>${paragraphContent}</p>`;
+          if (paragraphContent.trim() === "") {
+            html += "<p><br></p>";
+          } else {
+            html += `<p>${paragraphContent}</p>`;
+          }
         }
       }
       
       console.log("Final HTML:", html);
-      return html || "<p>No content available</p>";
+      if (html) {
+        return html;
+      } else {
+        return "<p>No content available</p>";
+      }
     } catch (e) {
       console.error("Error in renderContent:", e);
       return "<p>Error rendering content</p>";
