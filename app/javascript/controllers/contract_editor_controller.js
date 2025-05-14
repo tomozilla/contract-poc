@@ -27,11 +27,26 @@ export default class extends Controller {
     
     let initialContent
     try {
-      initialContent = this.contentTarget.value ? JSON.parse(this.contentTarget.value) : defaultContent
+      if (this.contentTarget.value) {
+        try {
+          if (typeof this.contentTarget.value === 'string') {
+            initialContent = JSON.parse(this.contentTarget.value)
+          } else {
+            initialContent = this.contentTarget.value
+          }
+        } catch (e) {
+          console.error("Error parsing initial content:", e)
+          initialContent = defaultContent
+        }
+      } else {
+        initialContent = defaultContent
+      }
     } catch (e) {
-      console.error("Error parsing initial content:", e)
+      console.error("Error setting up initial content:", e)
       initialContent = defaultContent
     }
+    
+    console.log("Initial content for editor:", initialContent)
     
     this.editor = new Editor({
       element: this.editorTarget,

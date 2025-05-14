@@ -47,35 +47,34 @@ export default class extends Controller {
     console.log("Processing JSON content:", JSON.stringify(json.content));
     let html = ""
     
-    for (let i = 0; i < json.content.length; i++) {
-      const node = json.content[i];
-      console.log("Processing node:", node);
-      
-      if (node.type === "paragraph") {
-        let paragraphContent = "";
+    try {
+      for (const node of json.content) {
+        console.log("Processing node:", node);
         
-        if (node.content && node.content.length > 0) {
-          for (let j = 0; j < node.content.length; j++) {
-            const textNode = node.content[j];
-            console.log("Processing text node:", textNode);
-            
-            if (textNode.type === "text") {
-              paragraphContent += textNode.text || "";
+        if (node.type === "paragraph") {
+          let paragraphContent = "";
+          
+          if (node.content && node.content.length > 0) {
+            for (const textNode of node.content) {
+              console.log("Processing text node:", textNode);
+              
+              if (textNode.type === "text") {
+                paragraphContent += textNode.text || "";
+              }
             }
           }
-        }
-        
-        console.log("Paragraph content:", paragraphContent);
-        
-        if (paragraphContent.trim() !== "") {
+          
+          console.log("Paragraph content:", paragraphContent);
+          
           html += `<p>${paragraphContent}</p>`;
-        } else {
-          html += "<p><br></p>";
         }
       }
+      
+      console.log("Final HTML:", html);
+      return html || "<p>No content available</p>";
+    } catch (e) {
+      console.error("Error in renderContent:", e);
+      return "<p>Error rendering content</p>";
     }
-    
-    console.log("Final HTML:", html);
-    return html || "<p>No content available</p>";
   }
 }
