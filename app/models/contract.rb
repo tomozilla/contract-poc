@@ -11,4 +11,5 @@ class Contract < ApplicationRecord
   enum :status, STATUSES
 
   validates :title, presence: true
+  validates :content, presence: true
 end
