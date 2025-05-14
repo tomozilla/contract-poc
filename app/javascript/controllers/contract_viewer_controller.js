@@ -1,4 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
+import { generateHTML } from "@tiptap/html"
+import StarterKit from "@tiptap/starter-kit"
+import Link from "@tiptap/extension-link"
 
 export default class extends Controller {
   static values = { content: String }
@@ -21,98 +24,74 @@ export default class extends Controller {
         ]
       }
       
-      let json
+      let parsedContent
       try {
-        if (typeof this.contentValue === 'string') {
-          json = JSON.parse(this.contentValue || JSON.stringify(defaultContent))
+        if (this.contentValue) {
+          console.log("Raw content value:", this.contentValue)
+          
+          if (typeof this.contentValue === 'string') {
+            try {
+              parsedContent = JSON.parse(this.contentValue)
+              console.log("Successfully parsed content value:", parsedContent)
+            } catch (parseError) {
+              console.error("Error parsing content value as JSON:", parseError)
+              if (this.contentValue.startsWith('"') && this.contentValue.endsWith('"')) {
+                try {
+                  const unescaped = JSON.parse(this.contentValue)
+                  parsedContent = typeof unescaped === 'string' ? JSON.parse(unescaped) : unescaped
+                  console.log("Successfully parsed double-encoded content:", parsedContent)
+                } catch (doubleParseError) {
+                  console.error("Error parsing double-encoded content:", doubleParseError)
+                  parsedContent = defaultContent
+                }
+              } else {
+                parsedContent = defaultContent
+              }
+            }
+          } else {
+            parsedContent = this.contentValue
+          }
         } else {
-          json = this.contentValue || defaultContent
+          parsedContent = defaultContent
         }
         
-        let hasValidContent = false;
-        if (json && json.content && json.content.length > 0) {
-          for (const node of json.content) {
+        let hasValidContent = false
+        if (parsedContent && parsedContent.content && parsedContent.content.length > 0) {
+          for (const node of parsedContent.content) {
             if (node.content && node.content.length > 0) {
               for (const textNode of node.content) {
                 if (textNode.type === 'text' && textNode.text && textNode.text.trim() !== '') {
-                  hasValidContent = true;
-                  break;
+                  hasValidContent = true
+                  break
                 }
               }
             }
-            if (hasValidContent) break;
+            if (hasValidContent) break
           }
         }
         
         if (!hasValidContent) {
-          json = defaultContent;
+          console.log("No valid content found, using default")
+          parsedContent = defaultContent
         }
         
-        console.log("Parsed JSON:", json)
+        console.log("Final parsed content:", parsedContent)
+        
+        const html = generateHTML(parsedContent, [
+          StarterKit,
+          Link
+        ])
+        
+        console.log("Generated HTML:", html)
+        this.element.innerHTML = html || "<p>No content available</p>"
+        
       } catch (e) {
-        console.error("Error parsing JSON:", e)
-        json = defaultContent
+        console.error("Error processing content:", e)
+        this.element.innerHTML = "<p>Error processing content</p>"
       }
-      
-      const renderedContent = this.renderContent(json)
-      console.log("Rendered content:", renderedContent)
-      this.element.innerHTML = renderedContent
     } catch (e) {
-      console.error("Error rendering content:", e)
+      console.error("Error in connect:", e)
       this.element.innerHTML = "<p>Error rendering content</p>"
-    }
-  }
-  
-  renderContent(json) {
-    if (!json || !json.content || json.content.length === 0) {
-      return "<p>No content available</p>"
-    }
-    
-    console.log("Processing JSON content:", JSON.stringify(json.content));
-    let html = ""
-    
-    try {
-      if (json.content.length === 1 && 
-          json.content[0].type === "paragraph" && 
-          (!json.content[0].content || json.content[0].content.length === 0)) {
-        return "<p>No content available</p>";
-      }
-      
-      for (const node of json.content) {
-        console.log("Processing node:", node);
-        
-        if (node.type === "paragraph") {
-          let paragraphContent = "";
-          
-          if (node.content && node.content.length > 0) {
-            for (const textNode of node.content) {
-              console.log("Processing text node:", textNode);
-              
-              if (textNode.type === "text") {
-                paragraphContent += textNode.text || "";
-              }
-            }
-          }
-          
-          console.log("Paragraph content:", paragraphContent);
-          
-          if (paragraphContent.trim() === "") {
-            html += "<p><br></p>";
-          } else {
-            html += `<p>${paragraphContent}</p>`;
-          }
-        }
-      }
-      
-      console.log("Final HTML:", html);
-      if (html) {
-        return html;
-      } else {
-        return "<p>No content available</p>";
-      }
-    } catch (e) {
-      console.error("Error in renderContent:", e);
-      return "<p>Error rendering content</p>";
     }
   }
 }
