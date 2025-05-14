@@ -1,0 +1,4 @@
+<h1><%= @contract.title %></h1>
+<%= @contract.content.to_json %>
+<div id="contract-content" data-controller="contract-viewer"
+     data-contract-viewer-content-value="<%= @contract.content.to_json %>"></div>
