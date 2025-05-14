@@ -14,7 +14,7 @@ export default class extends Controller {
             content: [
               {
                 type: "text",
-                text: "This is the contract content"
+                text: "No content available"
               }
             ]
           }
