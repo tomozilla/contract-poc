@@ -12,3 +12,6 @@ application.register("contract-viewer", ContractViewerController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import TiptapController from "./tiptap_controller"
+application.register("tiptap", TiptapController)
