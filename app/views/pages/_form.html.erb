@@ -4,12 +4,13 @@
     <%= f.text_field :title, class: "w-full border rounded p-2" %>
   </div>
 
-  <%= f.hidden_field :body, data: { target: "tiptap.input" } %>
-  <div
-    data-controller="tiptap"
-    data-tiptap-target="content"
-    class="prose border rounded p-4 mb-4"
-  ></div>
+  <div data-controller="tiptap">
+    <%= f.hidden_field :body, data: { tiptap_target: "input" } %>
+    <div
+      data-tiptap-target="content"
+      class="prose border rounded p-4 mb-4"
+    ></div>
+  </div>
 
   <%= f.submit class: "btn btn-primary" %>
 <% end %>
