@@ -1,33 +1,40 @@
 require "test_helper"
 
 class ContractsControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    @contract = contracts(:one)
+  end
+
   test "should get index" do
-    get contracts_index_url
+    get contracts_url
     assert_response :success
   end
 
   test "should get show" do
-    get contracts_show_url
+    get contract_url(@contract)
     assert_response :success
   end
 
   test "should get new" do
-    get contracts_new_url
+    get new_contract_url
     assert_response :success
   end
 
   test "should get edit" do
-    get contracts_edit_url
+    get edit_contract_url(@contract)
     assert_response :success
   end
 
-  test "should get create" do
-    get contracts_create_url
-    assert_response :success
+  test "should create contract" do
+    assert_difference("Contract.count") do
+      post contracts_url, params: { contract: { title: "New Contract", content: @contract.content, status: @contract.status } }
+    end
+
+    assert_redirected_to contract_url(Contract.last)
   end
 
-  test "should get update" do
-    get contracts_update_url
-    assert_response :success
+  test "should update contract" do
+    patch contract_url(@contract), params: { contract: { title: "Updated Contract" } }
+    assert_redirected_to contract_url(@contract)
   end
 end

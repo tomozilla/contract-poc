@@ -1,12 +1,6 @@
 require "sidekiq/web"
 
 Rails.application.routes.draw do
-  get "contracts/index"
-  get "contracts/show"
-  get "contracts/new"
-  get "contracts/edit"
-  get "contracts/create"
-  get "contracts/update"
   resources :companies
   resources :contracts
   get "/privacy", to: "home#privacy"
