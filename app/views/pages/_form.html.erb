@@ -1,0 +1,15 @@
+<%= form_with(model: page, data: { turbo: false }, local: true) do |f| %>
+  <div class="mb-4">
+    <%= f.label :title, class: "block font-medium" %>
+    <%= f.text_field :title, class: "w-full border rounded p-2" %>
+  </div>
+
+  <%= f.hidden_field :body, data: { target: "tiptap.input" } %>
+  <div
+    data-controller="tiptap"
+    data-tiptap-target="content"
+    class="prose border rounded p-4 mb-4"
+  ></div>
+
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>
