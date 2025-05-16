@@ -13,7 +13,7 @@ import Typography from "@tiptap/extension-typography"
 import BubbleMenu from "@tiptap/extension-bubble-menu"
 
 export default class extends Controller {
-  static targets = ["content", "input", "bubble"]
+  static targets = ["content", "input", "bubble", "fileInput"]
 
   connect() {
     this.editor = new Editor({
@@ -26,8 +26,16 @@ export default class extends Controller {
         TaskItem,
         TextAlign.configure({ types: ["heading", "paragraph"] }),
         Typography,
-        Link.configure({ openOnClick: true }),
-        Image,
+        Link.configure({
+          openOnClick: true,
+          HTMLAttributes: { class: "text-primary" }
+        }),
+        Image.configure({
+          allowBase64: true,
+          HTMLAttributes: {
+            class: 'img-fluid rounded',
+          },
+        }),
         BubbleMenu.configure({
           element: this.bubbleTarget,
           shouldShow: ({ editor, view, state, oldState, from, to }) => {
@@ -40,6 +48,11 @@ export default class extends Controller {
         this.inputTarget.value = editor.getHTML()
       }
     })
+
+    this.isDarkMode = false
+    if (localStorage.getItem('editorTheme') === 'dark') {
+      this.toggleTheme()
+    }
   }
 
   disconnect() {
@@ -48,9 +61,56 @@ export default class extends Controller {
 
   toggleBold() { this.editor.chain().focus().toggleBold().run() }
   toggleItalic() { this.editor.chain().focus().toggleItalic().run() }
+  toggleUnderline() { this.editor.chain().focus().toggleUnderline().run() }
+  toggleHighlighter() { this.editor.chain().focus().toggleHighlight().run() }
+  
   toggleBullet() { this.editor.chain().focus().toggleBulletList().run() }
   toggleOrdered() { this.editor.chain().focus().toggleOrderedList().run() }
   toggleTask() { this.editor.chain().focus().toggleTaskList().run() }
-  toggleUnderline() { this.editor.chain().focus().toggleUnderline().run() }
-  toggleHighlighter() { this.editor.chain().focus().toggleHighlight().run() }
+  
+  alignLeft() { this.editor.chain().focus().setTextAlign('left').run() }
+  alignCenter() { this.editor.chain().focus().setTextAlign('center').run() }
+  alignRight() { this.editor.chain().focus().setTextAlign('right').run() }
+  alignJustify() { this.editor.chain().focus().setTextAlign('justify').run() }
+  
+  setHeading(event) {
+    const level = parseInt(event.target.dataset.level)
+    this.editor.chain().focus().toggleHeading({ level }).run()
+  }
+  
+  setLink() {
+    const url = prompt('URL', 'https://')
+    if (url) {
+      this.editor.chain().focus().setLink({ href: url }).run()
+    }
+  }
+  
+  removeLink() {
+    this.editor.chain().focus().unsetLink().run()
+  }
+  
+  handleImageUpload(event) {
+    const file = event.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        this.editor.chain().focus().setImage({ src: e.target.result }).run()
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+  
+  toggleTheme() {
+    this.isDarkMode = !this.isDarkMode
+    
+    if (this.isDarkMode) {
+      document.querySelector('.tiptap-editor').classList.add('dark-mode')
+      document.querySelector('.tiptap-toolbar').classList.add('dark-mode')
+      localStorage.setItem('editorTheme', 'dark')
+    } else {
+      document.querySelector('.tiptap-editor').classList.remove('dark-mode')
+      document.querySelector('.tiptap-toolbar').classList.remove('dark-mode')
+      localStorage.setItem('editorTheme', 'light')
+    }
+  }
 }
