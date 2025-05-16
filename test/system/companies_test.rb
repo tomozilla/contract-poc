@@ -22,7 +22,7 @@ class CompaniesTest < ApplicationSystemTestCase
     click_on "Create Company"
 
     assert_text "Company was successfully created"
-    click_on "Back"
+    click_on "Cancel"
   end
 
   test "should update Company" do
@@ -37,12 +37,14 @@ class CompaniesTest < ApplicationSystemTestCase
     click_on "Update Company"
 
     assert_text "Company was successfully updated"
-    click_on "Back"
+    click_on "Cancel"
   end
 
   test "should destroy Company" do
     visit company_url(@company)
-    click_on "Destroy this company", match: :first
+    page.accept_confirm do
+      click_on "Destroy this company", match: :first
+    end
 
     assert_text "Company was successfully destroyed"
   end
