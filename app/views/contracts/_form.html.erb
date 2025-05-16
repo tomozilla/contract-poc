@@ -1,0 +1,11 @@
+<%= form_with(model: @contract, data: { controller: "contract-editor" }) do |f| %>
+  <div class="mb-4">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-input" %>
+  </div>
+
+  <div data-contract-editor-target="editor" class="border p-4 rounded-lg mb-4 min-h-[200px]"></div>
+  <%= f.hidden_field :content, data: { contract_editor_target: "content" } %>
+
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>
