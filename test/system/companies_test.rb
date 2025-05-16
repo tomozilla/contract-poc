@@ -12,7 +12,7 @@ class CompaniesTest < ApplicationSystemTestCase
 
   test "should create company" do
     visit companies_url
-    click_on "New company"
+    click_on "Add New Company"
 
     fill_in "Address", with: @company.address
     fill_in "Industry", with: @company.industry
@@ -22,12 +22,12 @@ class CompaniesTest < ApplicationSystemTestCase
     click_on "Create Company"
 
     assert_text "Company was successfully created"
-    click_on "Back"
+    # After creation, we're redirected to the show page which doesn't have a Cancel button
   end
 
   test "should update Company" do
     visit company_url(@company)
-    click_on "Edit this company", match: :first
+    click_on "Edit", match: :first
 
     fill_in "Address", with: @company.address
     fill_in "Industry", with: @company.industry
@@ -37,13 +37,17 @@ class CompaniesTest < ApplicationSystemTestCase
     click_on "Update Company"
 
     assert_text "Company was successfully updated"
-    click_on "Back"
+    # After update, we're redirected to the show page which doesn't have a Cancel button
   end
 
   test "should destroy Company" do
     visit company_url(@company)
-    click_on "Destroy this company", match: :first
+    page.accept_confirm do
+      click_on "Destroy this company", match: :first
+    end
 
+    # After destroy, we're redirected to the index page
+    assert_current_path companies_path
     assert_text "Company was successfully destroyed"
   end
 end
