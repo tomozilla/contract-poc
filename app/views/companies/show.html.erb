@@ -5,6 +5,9 @@
   <%= link_to edit_company_path(@company), class: 'btn btn-primary' do %>
     Edit
   <% end %>
+  <%= link_to company_path(@company), method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger' do %>
+    Destroy this company
+  <% end %>
   <h1>Show company</h1>
 </div>
 

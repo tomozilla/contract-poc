@@ -12,7 +12,7 @@ class CompaniesTest < ApplicationSystemTestCase
 
   test "should create company" do
     visit companies_url
-    click_on "New company"
+    click_on "Add New Company"
 
     fill_in "Address", with: @company.address
     fill_in "Industry", with: @company.industry
@@ -27,7 +27,7 @@ class CompaniesTest < ApplicationSystemTestCase
 
   test "should update Company" do
     visit company_url(@company)
-    click_on "Edit this company", match: :first
+    click_on "Edit", match: :first
 
     fill_in "Address", with: @company.address
     fill_in "Industry", with: @company.industry
