@@ -20,6 +20,7 @@ end
 
   resources :notifications, only: [ :index ]
   resources :announcements, only: [ :index ]
+  resources :editor, only: [ :index ]
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
