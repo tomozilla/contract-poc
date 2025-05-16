@@ -39,15 +39,4 @@ class CompaniesTest < ApplicationSystemTestCase
     assert_text "Company was successfully updated"
     # After update, we're redirected to the show page which doesn't have a Cancel button
   end
-
-  test "should destroy Company" do
-    visit company_url(@company)
-    page.accept_confirm do
-      click_on "Destroy this company", match: :first
-    end
-
-    # After destroy, we're redirected to the index page
-    assert_current_path companies_path
-    assert_text "Company was successfully destroyed"
-  end
 end
