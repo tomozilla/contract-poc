@@ -3,6 +3,7 @@ import { Editor } from "@tiptap/core"
 import StarterKit from "@tiptap/starter-kit"
 import Link from "@tiptap/extension-link"
 import Image from "@tiptap/extension-image"
+import debounce from "lodash.debounce"
 
 import Underline from "@tiptap/extension-underline"
 import Highlight from "@tiptap/extension-highlight"
@@ -43,10 +44,11 @@ export default class extends Controller {
           },
         }),
       ],
-      content: this.inputTarget.value || "<p>Start writing…</p>",
-      onUpdate: ({ editor }) => {
-        this.inputTarget.value = editor.getHTML()
-      }
+      content: this.initialContent(),
+      onUpdate: debounce(({editor}) => {
+        this.inputTarget.value = JSON.stringify(editor.getJSON())
+        this.saveDraft()
+      }, 800)  // 0.8s idle
     })
 
     this.isDarkMode = false
@@ -112,5 +114,28 @@ export default class extends Controller {
       document.querySelector('.tiptap-toolbar').classList.remove('dark-mode')
       localStorage.setItem('editorTheme', 'light')
     }
+  }
+  
+  initialContent() {
+    try { 
+      const value = this.inputTarget.value;
+      if (typeof value === 'object') return value;
+      return JSON.parse(value);
+    } catch { 
+      return "<p>Start writing…</p>" 
+    }
+  }
+  
+  saveDraft() {
+    fetch(this.inputTarget.form.action, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector("[name='csrf-token']").content
+      },
+      body: JSON.stringify({
+        editor: { draft_body: this.inputTarget.value }
+      })
+    })
   }
 }

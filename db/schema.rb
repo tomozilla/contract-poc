@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_14_130002) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_19_045717) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -69,6 +69,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_14_130002) do
     t.datetime "updated_at", null: false
     t.bigint "company_id"
     t.index ["company_id"], name: "index_contracts_on_company_id"
+  end
+
+  create_table "editors", force: :cascade do |t|
+    t.string "title"
+    t.jsonb "draft_body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["draft_body"], name: "index_editors_on_draft_body", using: :gin
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|

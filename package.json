@@ -42,6 +42,7 @@
     "chokidar": "^4.0.3",
     "esbuild-rails": "^1.0.7",
     "local-time": "^3.0.3",
+    "lodash.debounce": "^4.0.8",
     "nodemon": "^3.1.10",
     "postcss": "^8.5.3",
     "postcss-cli": "^11.0.1",

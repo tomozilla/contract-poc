@@ -1,82 +1,14 @@
 <div class="row">
   <div class="col-lg-8 offset-lg-2">
-    <h1 class="mb-4">Tiptap Editor Demo</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1>Editors</h1>
+      <%= link_to "New Editor", new_editor_path, class: "btn btn-primary" %>
+    </div>
     
-    <div data-controller="tiptap">
-      <!-- bubble menu (hover toolbar) -->
-      <div data-tiptap-target="bubble" class="bubble-menu bg-white shadow p-2 rounded">
-        <button type="button" data-action="click->tiptap#toggleBold" class="btn btn-sm btn-outline-secondary">B</button>
-        <button type="button" data-action="click->tiptap#toggleItalic" class="btn btn-sm btn-outline-secondary"><i>I</i></button>
-        <button type="button" data-action="click->tiptap#toggleUnderline" class="btn btn-sm btn-outline-secondary"><u>U</u></button>
-        <button type="button" data-action="click->tiptap#toggleHighlighter" class="btn btn-sm btn-outline-secondary">✎</button>
-        <button type="button" data-action="click->tiptap#setLink" class="btn btn-sm btn-outline-secondary">🔗</button>
-        <button type="button" data-action="click->tiptap#removeLink" class="btn btn-sm btn-outline-secondary">🔗&#8416;</button>
-      </div>
-
-      <!-- static toolbar -->
-      <div class="tiptap-toolbar">
-        <div class="toolbar-group">
-          <!-- Heading dropdown -->
-          <div class="dropdown d-inline-block">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="headingDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-              Heading
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="headingDropdown">
-              <li><button class="dropdown-item" data-action="click->tiptap#setHeading" data-level="1">Heading 1</button></li>
-              <li><button class="dropdown-item" data-action="click->tiptap#setHeading" data-level="2">Heading 2</button></li>
-              <li><button class="dropdown-item" data-action="click->tiptap#setHeading" data-level="3">Heading 3</button></li>
-              <li><button class="dropdown-item" data-action="click->tiptap#setHeading" data-level="4">Heading 4</button></li>
-              <li><button class="dropdown-item" data-action="click->tiptap#setHeading" data-level="5">Heading 5</button></li>
-              <li><button class="dropdown-item" data-action="click->tiptap#setHeading" data-level="6">Heading 6</button></li>
-            </ul>
-          </div>
-        </div>
-        
-        <div class="toolbar-group">
-          <!-- Text formatting buttons -->
-          <button type="button" data-action="click->tiptap#toggleBold" class="btn btn-outline-secondary"><i class="bi bi-type-bold"></i></button>
-          <button type="button" data-action="click->tiptap#toggleItalic" class="btn btn-outline-secondary"><i class="bi bi-type-italic"></i></button>
-          <button type="button" data-action="click->tiptap#toggleUnderline" class="btn btn-outline-secondary"><i class="bi bi-type-underline"></i></button>
-          <button type="button" data-action="click->tiptap#toggleHighlighter" class="btn btn-outline-secondary"><i class="bi bi-highlighter"></i></button>
-        </div>
-        
-        <div class="toolbar-group">
-          <!-- List buttons -->
-          <button type="button" data-action="click->tiptap#toggleBullet" class="btn btn-outline-secondary"><i class="bi bi-list-ul"></i></button>
-          <button type="button" data-action="click->tiptap#toggleOrdered" class="btn btn-outline-secondary"><i class="bi bi-list-ol"></i></button>
-          <button type="button" data-action="click->tiptap#toggleTask" class="btn btn-outline-secondary"><i class="bi bi-check2-square"></i></button>
-        </div>
-        
-        <div class="toolbar-group">
-          <!-- Text alignment buttons -->
-          <button type="button" data-action="click->tiptap#alignLeft" class="btn btn-outline-secondary"><i class="bi bi-text-left"></i></button>
-          <button type="button" data-action="click->tiptap#alignCenter" class="btn btn-outline-secondary"><i class="bi bi-text-center"></i></button>
-          <button type="button" data-action="click->tiptap#alignRight" class="btn btn-outline-secondary"><i class="bi bi-text-right"></i></button>
-          <button type="button" data-action="click->tiptap#alignJustify" class="btn btn-outline-secondary"><i class="bi bi-justify"></i></button>
-        </div>
-        
-        <div class="toolbar-group">
-          <!-- Link buttons -->
-          <button type="button" data-action="click->tiptap#setLink" class="btn btn-outline-secondary"><i class="bi bi-link-45deg"></i></button>
-          <button type="button" data-action="click->tiptap#removeLink" class="btn btn-outline-secondary"><i class="bi bi-link-45deg"></i> <i class="bi bi-x small"></i></button>
-        </div>
-        
-        <div class="toolbar-group">
-          <!-- Image upload -->
-          <label for="image-upload" class="btn btn-outline-secondary mb-0">
-            <i class="bi bi-image"></i>
-            <input id="image-upload" type="file" accept="image/*" data-tiptap-target="fileInput" data-action="change->tiptap#handleImageUpload" class="d-none" />
-          </label>
-        </div>
-        
-        <div class="toolbar-group ms-auto">
-          <!-- Theme toggle -->
-          <button type="button" data-action="click->tiptap#toggleTheme" class="btn btn-outline-secondary"><i class="bi bi-circle-half"></i></button>
-        </div>
-      </div>
-
-      <input type="hidden" data-tiptap-target="input" value="<p>Start writing here...</p>" />
-      <div data-tiptap-target="content" class="tiptap-editor prose mb-4"></div>
+    <div class="list-group">
+      <% @editors.each do |editor| %>
+        <%= link_to editor.title, editor, class: "list-group-item list-group-item-action" %>
+      <% end %>
     </div>
   </div>
 </div>
