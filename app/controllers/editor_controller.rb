@@ -28,7 +28,7 @@ class EditorController < ApplicationController
   def update
     @editor.assign_attributes(editor_params)
 
-    if @editor.changed == ["draft_body"]
+    if @editor.changed == [ "draft_body" ]
       @editor.save(validate: false)
       head :no_content        # keeps cursor, zero redirect
     elsif @editor.save
