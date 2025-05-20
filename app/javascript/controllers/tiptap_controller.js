@@ -13,10 +13,14 @@ import TextAlign from "@tiptap/extension-text-align"
 import Typography from "@tiptap/extension-typography"
 import BubbleMenu from "@tiptap/extension-bubble-menu"
 
+
+
+
 export default class extends Controller {
   static targets = ["content", "input", "bubble", "fileInput"]
 
   connect() {
+    console.log("tiptap_controller connected")
     this.editor = new Editor({
       element: this.contentTarget,
       extensions: [
@@ -65,32 +69,32 @@ export default class extends Controller {
   toggleItalic() { this.editor.chain().focus().toggleItalic().run() }
   toggleUnderline() { this.editor.chain().focus().toggleUnderline().run() }
   toggleHighlighter() { this.editor.chain().focus().toggleHighlight().run() }
-  
+
   toggleBullet() { this.editor.chain().focus().toggleBulletList().run() }
   toggleOrdered() { this.editor.chain().focus().toggleOrderedList().run() }
   toggleTask() { this.editor.chain().focus().toggleTaskList().run() }
-  
+
   alignLeft() { this.editor.chain().focus().setTextAlign('left').run() }
   alignCenter() { this.editor.chain().focus().setTextAlign('center').run() }
   alignRight() { this.editor.chain().focus().setTextAlign('right').run() }
   alignJustify() { this.editor.chain().focus().setTextAlign('justify').run() }
-  
+
   setHeading(event) {
     const level = parseInt(event.target.dataset.level)
     this.editor.chain().focus().toggleHeading({ level }).run()
   }
-  
+
   setLink() {
     const url = prompt('URL', 'https://')
     if (url) {
       this.editor.chain().focus().setLink({ href: url }).run()
     }
   }
-  
+
   removeLink() {
     this.editor.chain().focus().unsetLink().run()
   }
-  
+
   handleImageUpload(event) {
     const file = event.target.files[0]
     if (file) {
@@ -101,10 +105,10 @@ export default class extends Controller {
       reader.readAsDataURL(file)
     }
   }
-  
+
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode
-    
+
     if (this.isDarkMode) {
       document.querySelector('.tiptap-editor').classList.add('dark-mode')
       document.querySelector('.tiptap-toolbar').classList.add('dark-mode')
@@ -115,17 +119,17 @@ export default class extends Controller {
       localStorage.setItem('editorTheme', 'light')
     }
   }
-  
+
   initialContent() {
-    try { 
+    try {
       const value = this.inputTarget.value;
       if (typeof value === 'object') return value;
       return JSON.parse(value);
-    } catch { 
-      return "<p>Start writing…</p>" 
+    } catch {
+      return "<p>Start writing…</p>"
     }
   }
-  
+
   saveDraft() {
     fetch(this.inputTarget.form.action, {
       method: "PATCH",
