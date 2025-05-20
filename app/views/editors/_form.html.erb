@@ -1,0 +1,28 @@
+<%= form_with(model: editor, data: { turbo: false }, local: true) do |f| %>
+  <div class="mb-4">
+    <%= f.label :title, class: "block font-medium" %>
+    <%= f.text_field :title, class: "w-full border rounded p-2" %>
+  </div>
+
+  <div data-controller="tiptap" data-tiptap-initial="<%= editor.body %>">
+    <div data-tiptap-target="bubble"
+         class="bubble-menu bg-white shadow p-2 rounded hidden"></div>
+
+    <div class="flex gap-2 mb-2">
+      <button type="button" data-action="click->tiptap#toggleBold"        class="btn">B</button>
+      <button type="button" data-action="click->tiptap#toggleItalic"      class="btn italic">I</button>
+      <button type="button" data-action="click->tiptap#toggleUnderline"   class="btn underline">U</button>
+      <button type="button" data-action="click->tiptap#toggleBullet"      class="btn">• List</button>
+      <button type="button" data-action="click->tiptap#toggleOrdered"     class="btn">1. List</button>
+      <button type="button" data-action="click->tiptap#toggleTask"        class="btn">☐ Task</button>
+      <button type="button" data-action="click->tiptap#toggleHighlighter" class="btn">✎</button>
+    </div>
+
+    <%= f.hidden_field :body, data: { tiptap_target: "input" } %>
+
+    <div data-tiptap-target="content"
+         class="prose border rounded p-4 mb-4 min-h-[200px]"></div>
+  </div>
+
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>

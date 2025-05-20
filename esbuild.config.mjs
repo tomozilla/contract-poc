@@ -18,7 +18,8 @@ import { setTimeout } from "timers/promises"
 
 const clients = []
 const entryPoints = [
-  "application.js"
+  "application.js",
+  "tiptap_bundle.js"
 ]
 const watchDirectories = [
   "./app/javascript/**/*.js",

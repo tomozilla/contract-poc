@@ -1,6 +1,13 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  get "editors/index"
+  get "editors/show"
+  get "editors/new"
+  get "editors/edit"
+  get "editors/create"
+  get "editors/update"
+  get "editors/destroy"
   get '/privacy', to: 'home#privacy'
   get '/terms', to: 'home#terms'
 authenticate :user, lambda { |u| u.admin? } do
@@ -30,4 +37,5 @@ end
 
   # Defines the root path route ("/")
   # root "posts#index"
+  resources :editors
 end

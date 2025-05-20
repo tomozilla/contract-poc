@@ -1,0 +1,10 @@
+<div class="container">
+  <h1 class="my-4">Edit Editor</h1>
+
+  <%= render 'form', editor: @editor %>
+
+  <div class="mt-4">
+    <%= link_to "Show this editor", @editor, class: "btn btn-outline-primary" %>
+    <%= link_to "Back to editors", editors_path, class: "btn btn-outline-secondary" %>
+  </div>
+</div>

@@ -1,3 +1,9 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
 @import "jumpstart/announcements";
+
+/* TipTap extension styles */
+@import "@tiptap/extension-text-align/style.css";
+@import "@tiptap/extension-task-list/style.css";
+@import "@tiptap/extension-bubble-menu/style.css";
+@import "tiptap";
