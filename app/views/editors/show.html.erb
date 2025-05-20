@@ -9,7 +9,7 @@
     </div>
     <div class="card-body">
       <div class="prose">
-        <%= raw @editor.body %>
+        <%= sanitize @editor.body %>
       </div>
     </div>
     <div class="card-footer">

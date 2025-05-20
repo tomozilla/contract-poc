@@ -2,37 +2,43 @@ require "test_helper"
 
 class EditorsControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
-    get editors_index_url
+    get editors_path
     assert_response :success
   end
 
   test "should get show" do
-    get editors_show_url
+    get editor_path(editors(:one))
     assert_response :success
   end
 
   test "should get new" do
-    get editors_new_url
+    get new_editor_path
     assert_response :success
   end
 
   test "should get edit" do
-    get editors_edit_url
+    get edit_editor_path(editors(:one))
     assert_response :success
   end
 
-  test "should get create" do
-    get editors_create_url
-    assert_response :success
+  test "should create editor" do
+    assert_difference("Editor.count") do
+      post editors_path, params: { editor: { title: "New Editor", body: "Test body" } }
+    end
+
+    assert_redirected_to editor_path(Editor.last)
   end
 
-  test "should get update" do
-    get editors_update_url
-    assert_response :success
+  test "should update editor" do
+    patch editor_path(editors(:one)), params: { editor: { title: "Updated Title", body: "Updated body" } }
+    assert_redirected_to editor_path(editors(:one))
   end
 
-  test "should get destroy" do
-    get editors_destroy_url
-    assert_response :success
+  test "should destroy editor" do
+    assert_difference("Editor.count", -1) do
+      delete editor_path(editors(:one))
+    end
+
+    assert_redirected_to editors_path
   end
 end
