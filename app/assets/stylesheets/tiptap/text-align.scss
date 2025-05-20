@@ -1,0 +1,16 @@
+/* Custom text align styles to replace the npm package styles */
+.ProseMirror {
+  & > * {
+    &[style*="text-align:center"] {
+      text-align: center;
+    }
+    
+    &[style*="text-align:right"] {
+      text-align: right;
+    }
+    
+    &[style*="text-align:justify"] {
+      text-align: justify;
+    }
+  }
+}
