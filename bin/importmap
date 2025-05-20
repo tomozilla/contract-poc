@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "bundler/setup"
+
+# This script provides compatibility for the CI scan_js job
+# while the project uses esbuild instead of importmap
+if ARGV[0] == "audit"
+  system("yarn audit")
+end

@@ -39,11 +39,12 @@ class EditorsController < ApplicationController
   end
 
   private
-    def set_editor
-      @editor = Editor.find(params[:id])
-    end
 
-    def editor_params
-      params.require(:editor).permit(:title, :body)
-    end
+  def set_editor
+    @editor = Editor.find(params[:id])
+  end
+
+  def editor_params
+    params.require(:editor).permit(:title, :body)
+  end
 end
