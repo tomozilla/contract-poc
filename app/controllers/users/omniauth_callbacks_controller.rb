@@ -1,7 +1,7 @@
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-    before_action :set_service, except: [:failure]
-    before_action :set_user, except: [:failure]
+    before_action :set_service, except: [ :failure ]
+    before_action :set_user, except: [ :failure ]
 
     attr_reader :service, :user
 
@@ -40,7 +40,7 @@ module Users
     end
 
     def auth
-      request.env['omniauth.auth']
+      request.env["omniauth.auth"]
     end
 
     def set_service
