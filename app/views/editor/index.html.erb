@@ -1,0 +1,14 @@
+<div class="container mt-4">
+  <h1>TipTap Editor</h1>
+  
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div id="tiptap-editor" class="tiptap-editor">
+        <!-- Editor content will be initialized here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- This editor will use importmap-based JavaScript -->
+<%= javascript_include_tag "editor", "data-turbo-track": "reload" %>
