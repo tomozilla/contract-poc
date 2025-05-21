@@ -61,10 +61,8 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
-gem "cssbundling-rails"
 gem "devise", "~> 4.9"
 gem "friendly_id", "~> 5.4"
-gem "jsbundling-rails"
 gem "madmin"
 gem "name_of_person", github: "basecamp/name_of_person"
 gem "noticed", "~> 2.0"
