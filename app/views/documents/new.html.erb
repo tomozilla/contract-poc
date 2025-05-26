@@ -1,0 +1,21 @@
+<div class="container">
+  <h1>Create a New Signature Request</h1>
+
+  <%= form_with url: documents_path, local: true do |f| %>
+    <div class="mb-3">
+      <%= f.label :name, "Template Name", class: "form-label" %><br>
+      <%= f.text_field :name, required: true, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :pdf_url, "Public PDF URL", class: "form-label" %><br>
+      <%= f.url_field :pdf_url, placeholder: "https://…", class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :signer_email, "Signer's Email", class: "form-label" %><br>
+      <%= f.email_field :signer_email, required: true, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= f.submit "Create & Sign", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

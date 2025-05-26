@@ -1,7 +1,7 @@
 require "sidekiq/web"
 
 Rails.application.routes.draw do
-  resources :documents, only: [ :show ]
+  resources :documents, only: [ :new, :create, :show ]
   get "/privacy", to: "home#privacy"
   get "/terms", to: "home#terms"
 authenticate :user, lambda { |u| u.admin? } do
