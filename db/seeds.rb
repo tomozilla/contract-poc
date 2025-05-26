@@ -10,6 +10,6 @@
 
 # Create a sample document for DocuSeal testing
 Document.find_or_create_by!(
-  name: "Sample Contract", 
+  name: "Sample Contract",
   pdf_url: "https://www.africau.edu/images/default/sample.pdf"
 )
