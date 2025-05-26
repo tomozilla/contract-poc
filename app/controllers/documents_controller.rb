@@ -14,7 +14,7 @@ class DocumentsController < ApplicationController
     payload = {
       name: params[:name],
       external_id: SecureRandom.uuid,
-      document_urls: [params[:pdf_url]].compact
+      document_urls: [ params[:pdf_url] ].compact
     }
 
     # 2) Call DocuSeal's Create Template endpoint
@@ -31,7 +31,7 @@ class DocumentsController < ApplicationController
     if res.is_a?(Net::HTTPSuccess)
       template = JSON.parse(res.body)
       # 3) Redirect to show, passing template_id and signer_email
-      redirect_to document_path(id: template["id"], 
+      redirect_to document_path(id: template["id"],
                                template_id: template["id"],
                                signer_email: params[:signer_email])
     else
