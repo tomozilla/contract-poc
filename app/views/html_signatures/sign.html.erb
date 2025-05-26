@@ -1,0 +1,62 @@
+<script src="https://cdn.docuseal.com/js/form.js"></script>
+<docuseal-form
+  data-src="https://docuseal.com/s/<%= @slug %>"
+  data-email="<%= @signer_email %>">
+  <style>
+    /* DOCUSEAL SIGNING FORM DARK THEME */
+    .tooltip:before { background-color: #364153; }
+    .start-form-container { padding: 1rem; background-color: #1E2839; border-radius: 0.25rem; border: 1px solid #1E2839; }
+    .start-form-company-logo { background-color: #ffffff; border-radius: 0.25rem; }
+    .start-form-template-info-container { border-radius: 0.25rem; background-color: #1E2839; border: 1px solid #101828; color: #ffffff; }
+    .start-form-template-title { color: #ffffff; }
+    .start-form label { color: #ffffff; }
+    .start-form input { border-radius: 0.25rem; background-color: #101828; border: 1px solid #101828; color: #ffffff; }
+    .start-form input::placeholder { color: #ffffff; }
+    .start-form-submit-button { background-color: #700DE7; border: 0; border-radius: 0.25rem; color: #ffffff; }
+    .start-form-submit-button:hover { background-color: #8022FE; }
+    .form-container { background-color: #1E2839; border-radius: 0.25rem; border: 1px solid #1E2839; }
+    .scrollbox { background-color: #101828; }
+    .page-container { border: 1px solid #1E2839; }
+    .minimize-form-button { color: #ffffff; }
+    .template-title { color: #ffffff; }
+    .company-logo { background-color: #ffffff; border-radius: 0.25rem; }
+    .type-text-button, .upload-image-button, .clear-canvas-button, .set-current-date-button, .reupload-button { background-color: #364153; border: 0; border-radius: 0.25rem; color: #ffffff; }
+    .type-text-button:hover, .upload-image-button:hover, .clear-canvas-button:hover, .set-current-date-button:hover, .reupload-button:hover { background-color: #495565; }
+    .field-name-label, .field-description-text, .checkbox-label, .radio-label, .attachment-file-name, .remove-attachment-button, .toggle-multiline-text-button, .change-phone-number-link, .resend-code-link { color: #ffffff; }
+    .steps-progress a { background-color: #6A7282; border: none; }
+    .steps-progress-current { background-color: #ffffff !important; }
+    .steps-form input, .steps-form textarea, .steps-form select { border-radius: 0.25rem; background-color: #101828; border: 1px solid #101828; color: #ffffff; }
+    .steps-form input::placeholder, .steps-form textarea::placeholder, .steps-form select::placeholder { color: #ffffff; }
+    .steps-form input:checked { --chkbg: 220 43% 11%; }
+    .steps-form input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); }
+    .draw-canvas { background-color: #E5E8EB; border-radius: 0.25rem; border: 1px solid #101828; }
+    .file-dropzone { border-radius: 0.25rem; background-color: #101828; border: 1px solid #101828; color: #ffffff; }
+    .file-dropzone:hover { background-color: #364153; }
+    .uploaded-image-preview { border-radius: 0.25rem; border: 1px solid #101828; }
+    .submit-form-button { background-color: #700DE7; border: 0; border-radius: 0.25rem; color: #ffffff ; }
+    .submit-form-button:disabled { background-color: #364153; color: #ffffff; }
+    .submit-form-button:hover { background-color: #8022FE; }
+    .expand-form-button { background-color: #432DD7; border: 0; border-radius: 0.25rem; color: #ffffff; }
+    .expand-form-button:hover { background-color: #5039F6; }
+    .phone-number-input-container { outline-color: transparent; }
+    .country-code-select-label { background-color: #364153; border-color: #101828; border-radius: 0.25rem; color: #ffffff; }
+    .completed-form { padding: 1rem; border-radius: 0.25rem; border: 1px solid #101828; }
+    .completed-form-message-title, .completed-form-message-body { color: #ffffff; }
+    .completed-form-completed-button { background-color: #700DE7; border: 0; border-radius: 0.25rem; color: #ffffff; }
+    .completed-form-completed-button:hover { background-color: #8022FE; }
+    .completed-form-send-copy-button { background-color: #432DD7; border: 0; border-radius: 0.25rem; color: #ffffff; }
+    .completed-form-send-copy-button:hover { background-color: #5039F6; }
+    .completed-form-download-button { background-color: #A806B7; border: 0; border-radius: 0.25rem; color: #ffffff; }
+    .completed-form-download-button:hover { background-color: #C809DE; }
+    .submitted-form-container { padding: 1rem; background-color: #1E2839; border-radius: 0.25rem; border: 1px solid #1E2839; }
+    .submitted-form-company-logo { background-color: #ffffff; border-radius: 0.25rem; }
+    .submitted-form-template-info-container { border-radius: 0.25rem; background-color: #1E2839; border: 1px solid #101828; color: #ffffff; }
+    .submitted-form-title, .submitted-form-template-title, .submitted-form-template-description { color: #ffffff; }
+    .submitted-form-send-copy-button { background-color: #700DE7; border: 0; border-radius: 0.25rem; color: #ffffff; }
+    .submitted-form-send-copy-button:hover { background-color: #8022FE; }
+    .submitted-form-resubmit-button { background-color: #364153; border: 0; border-radius: 0.25rem; color: #ffffff; }
+    .submitted-form-resubmit-button:hover { background-color: #495565; }
+    .field-area { background-color: rgba(229, 232, 235, 0.5); border-color: #1E2839; }
+    .field-area-active { border-color: #432DD7; }
+  </style>
+</docuseal-form>

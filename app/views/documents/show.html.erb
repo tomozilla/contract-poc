@@ -1,8 +1,10 @@
 <div class="container">
-  <h1><%= @document.name %></h1>
+  <h1>Fill & Sign: <%= @document.name %></h1>
   
   <docuseal-builder
     data-controller="docuseal"
-    data-token="<%= @docuseal_token %>">
+    data-token="<%= @docuseal_token %>"
+    data-template-id="<%= @template_id %>"
+    data-roles="Company,Customer">
   </docuseal-builder>
 </div>
