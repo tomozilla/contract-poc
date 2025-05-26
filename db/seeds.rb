@@ -7,3 +7,9 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+# Create a sample document for DocuSeal testing
+Document.find_or_create_by!(
+  name: "Sample Contract",
+  pdf_url: "https://www.africau.edu/images/default/sample.pdf"
+)
