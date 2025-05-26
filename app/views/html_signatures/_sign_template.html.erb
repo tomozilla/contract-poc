@@ -1,7 +1,13 @@
 <div style="width: 80%; margin: 0 auto; padding: 20px; border: 1px solid #ccc;">
   <div style="text-align: center; margin-bottom: 20px;">
-    <h2>Agreement</h2>
+    <h2>Contract Document</h2>
   </div>
+  
+  <!-- Dynamic contract content from TipTap editor -->
+  <div style="margin-bottom: 30px; line-height: 1.6;">
+    <%= contract_content&.html_safe || "<p>No contract content provided.</p>".html_safe %>
+  </div>
+
   <p>This Agreement is made and entered into by and between:</p>
   <p style="display: flex; align-items: center;">
     <span>Party A: </span>
