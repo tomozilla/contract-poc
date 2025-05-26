@@ -11,9 +11,10 @@ class DocumentsController < ApplicationController
       document_urls: [ @document.pdf_url ]
     }
 
+    api_key = Rails.application.credentials.docuseal&.[](:api_key) || "test_key_for_ci"
     @docuseal_token = JWT.encode(
       payload,
-      Rails.application.credentials.docuseal[:api_key],
+      api_key,
       "HS256"
     )
   end
