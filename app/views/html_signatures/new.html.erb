@@ -1,13 +1,27 @@
 <div class="container">
-  <%= form_with url: html_signatures_path, method: :post do %>
-    <div>
-      <%= label_tag :signer1_email, "Signer 1 Email" %>
-      <%= email_field_tag :signer1_email, nil, required: true %>
+  <%= form_with url: html_signatures_path, method: :post do |form| %>
+    <!-- TipTap Editor Section -->
+    <div class="mb-4">
+      <label class="form-label fw-bold">Contract Content</label>
+      <div data-controller="tiptap-editor" class="border rounded">
+        <div data-tiptap-editor-target="editor" class="min-h-200"></div>
+        <%= form.hidden_field :contract_content, data: { tiptap_editor_target: "content" } %>
+      </div>
+      <small class="form-text text-muted">Use the editor above to write your contract content with rich formatting.</small>
     </div>
-    <div>
-      <%= label_tag :signer2_email, "Signer 2 Email" %>
-      <%= email_field_tag :signer2_email, nil, required: true %>
+
+    <!-- Signers Section -->
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= form.label :signer1_email, "Signer 1 Email", class: "form-label" %>
+        <%= form.email_field :signer1_email, class: "form-control", required: true %>
+      </div>
+      <div class="col-md-6 mb-3">
+        <%= form.label :signer2_email, "Signer 2 Email", class: "form-label" %>
+        <%= form.email_field :signer2_email, class: "form-control", required: true %>
+      </div>
     </div>
-    <%= submit_tag "Sign", class: "btn btn-primary", style: "margin-top: 40px;" %>
+    
+    <%= form.submit "Create Contract", class: "btn btn-primary" %>
   <% end %>
 </div>
