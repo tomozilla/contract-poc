@@ -1,6 +1,8 @@
 require "net/http"
 require "json"
 require "securerandom"
+require "docuseal"
+require "base64"
 
 class DocumentsController < ApplicationController
   before_action :authenticate_user!
@@ -10,32 +12,48 @@ class DocumentsController < ApplicationController
   end
 
   def create
-    # 1) Build payload
-    payload = {
-      name: params[:name],
-      external_id: SecureRandom.uuid,
-      document_urls: [ params[:pdf_url] ].compact
-    }
+    @document = Document.new(document_params)
 
-    # 2) Call DocuSeal's Create Template endpoint
-    api_key = Rails.application.credentials.docuseal&.[](:api_key) || "test_key_for_ci"
-    uri = URI("https://api.docuseal.com/v1/templates")
-    req = Net::HTTP::Post.new(uri, "Content-Type" => "application/json")
-    req.basic_auth api_key, ""
-    req.body = payload.to_json
+    file_param = params[:document][:pdf_file]
+    file_url = params[:document][:pdf_url]
 
-    res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
-      http.request(req)
+    file_value =
+      if file_param.present?
+        Base64.encode64(file_param.read)
+      elsif file_url.present?
+        file_url
+      else
+        nil
+      end
+
+    if file_value.nil?
+      flash.now[:alert] = "Please provide a PDF file or URL."
+      render :new, status: :unprocessable_entity
+      return
     end
 
-    if res.is_a?(Net::HTTPSuccess)
-      template = JSON.parse(res.body)
-      # 3) Redirect to show, passing template_id and signer_email
-      redirect_to document_path(id: template["id"],
-                               template_id: template["id"],
-                               signer_email: params[:signer_email])
-    else
-      flash.now[:alert] = "DocuSeal error: #{res.body}"
+    begin
+      docuseal_payload = {
+        name: params[:document][:name],
+        documents: [
+          {
+            name: params[:document][:name],
+            file: file_value
+          }
+        ]
+      }
+      Rails.logger.info "DOCUSEAL REQUEST PAYLOAD: #{docuseal_payload.inspect}"
+
+      result = Docuseal.create_template_from_pdf(docuseal_payload)
+      Rails.logger.info "DOCUSEAL RESPONSE: #{result.inspect}"
+
+      redirect_to document_path(id: result["id"],
+                               template_id: result["id"],
+                               signer_email: params[:document][:signer_email])
+    rescue => e
+      Rails.logger.error "DOCUSEAL ERROR: #{e.class} - #{e.message}"
+      Rails.logger.error e.backtrace.join("\n")
+      flash.now[:alert] = "DocuSeal error: #{e.message}"
       render :new, status: :unprocessable_entity
     end
   end
@@ -46,7 +64,7 @@ class DocumentsController < ApplicationController
     @signer_email = params[:signer_email] || current_user.email
 
     payload = {
-      user_email: current_user.email,
+      user_email: "mitani.work+test@gmail.com",
       integration_email: @signer_email,
       external_id: @template_id,
       template_id: @template_id,
@@ -59,5 +77,11 @@ class DocumentsController < ApplicationController
       api_key,
       "HS256"
     )
+  end
+
+  private
+
+  def document_params
+    params.fetch(:document, {}).permit(:name, :pdf_url)
   end
 end

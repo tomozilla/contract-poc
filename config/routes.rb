@@ -17,6 +17,9 @@ end
 
   resources :notifications, only: [ :index ]
   resources :announcements, only: [ :index ]
+  resources :html_signatures, only: [ :new, :create ] do
+    get "sign", on: :collection
+  end
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   root to: "home#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
